@@ -1,0 +1,28 @@
+{
+  "name": "asdfklgash/Ingenico-Marketplace-API",
+  "description": "PHP-Library for the Ingenico Marketplace API",
+  "minimum-stability": "dev",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Markus Zierhut",
+      "email": "markus.zierhut@re-in.de"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "guzzlehttp/guzzle": "6.3.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "asdfklgash\\IngenicoMarketplaceAPI\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-ci": "vendor/bin/phpunit --coverage-text"
+  }
+}
