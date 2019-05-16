@@ -14,7 +14,8 @@
     "guzzlehttp/guzzle": "6.3.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "*",
+    "vlucas/phpdotenv": "*"
   },
   "autoload": {
     "psr-4": {
