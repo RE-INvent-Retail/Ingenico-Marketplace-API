@@ -1,6 +1,7 @@
 <?php
 
 require '../vendor/autoload.php';
+require 'init.inc.php';
 
 use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
 
