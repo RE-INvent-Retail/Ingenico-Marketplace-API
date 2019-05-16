@@ -2,6 +2,8 @@
 
 require 'init.inc.php';
 
+use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
+
 $movements = new Marketplace\Resources\Movements( $conn );
 
 $result = $movements->getAll();

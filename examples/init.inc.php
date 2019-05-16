@@ -1,12 +1,13 @@
 <?php
 
+require '../vendor/autoload.php';
+
 $dotenv = Dotenv\Dotenv::create(__DIR__);
 $dotenv->load();
+$dotenv->required([ 'LOGIN', 'AESKEY' ]);
 
 define( 'LOGIN', getenv('LOGIN') );
 define( 'AESKEY', getenv('AESKEY') );
-
-require '../vendor/autoload.php';
 
 use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
 

@@ -2,6 +2,8 @@
 
 require 'init.inc.php';
 
+use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
+
 $wallets = new Marketplace\Resources\Wallet( $conn );
 
 $result = $wallets->getAll();
