@@ -6,9 +6,21 @@ use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
 
 $wallets = new Marketplace\Resources\Wallet( $conn );
 
+echo 'getAll:' . "\n";
 $result = $wallets->getAll();
-print_r($result);
+echo " -> wallet count " . count( $result ) . "\n";
 
-$result = $wallets->create( '2004', new Marketplace\Resources\Wallet\OwnerType\Merchant(), 'DE87123456781234567890', 'TESTDE111', 'Markus Zierhut' );
+echo "\n\n";
 
-print_r($result);
+echo 'create:' . "\n";
+$wallet = new Marketplace\Objects\Wallet();
+$wallet->setAlias( 'mirakl_' . '2015' );
+$wallet->setWalletOwnerType( new Marketplace\Objects\Wallet\WalletOwnerType\Merchant() );
+$wallet->setIban('DE12123456781234567890');
+$wallet->setBic('');
+$wallet->setBankAccountOwner('Peter Beitzel' );
+$result = $wallets->create( $wallet );
+if( $result === true )
+    echo ' -> new ID: ' . $wallet->getWalletId() . "\n";
+else
+    echo 'error occured';

@@ -14,6 +14,8 @@ class Connection
     private $_authentication = null;
     private $_client = null;
 
+    private $_debug = false;
+
     public function __construct( Environment $environment, Authentication $authentication )
     {
         $this->_environment = $environment;
@@ -46,6 +48,26 @@ class Connection
     public function __call( $name, $arguments )
     {
         return call_user_func_array( [ $this->_client, $name ], $arguments );
+    }
+
+    public function getEnvironment()
+    {
+        return $this->_environment;
+    }
+
+    public function getAuthentication()
+    {
+        return $this->_authentication;
+    }
+
+    public function isDebug()
+    {
+        return $this->_debug;
+    }
+
+    public function setDebug( $debug = true )
+    {
+        $this->_debug = $debug;
     }
 
 }

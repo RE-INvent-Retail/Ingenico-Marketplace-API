@@ -22,51 +22,103 @@ class Authentication
     {
         return function (callable $handler) {
             return function (\Psr\Http\Message\RequestInterface $request, array $options) use ($handler) {
-                $header = $this->getAuthorizationHeader( $request );
+                $header = $this->createAuthorizationHeader( $request );
                 if(!empty($header))
+                {
+                    // TODO: Logging
                     $request = $request->withHeader('Authorization', $header);
+                }
                 return $handler($request, $options);
             };
         };
     }
 
-    public function getAuthorizationHeader( $request )
+    public function createAuthorizationHeader( $request )
     {
-        $timestamp =  date(\DateTime::ISO8601 );
-        $nonce = hash('sha512', rand( 0, PHP_INT_MAX ) );
-        //if ($command->getRequest() instanceof EntityEnclosingRequestInterface)
-            $body = $request->getBody();
 
-        $data = [
-            $timestamp,
-            $nonce,
-            $request->getMethod(),
-            $request->getUri()->getPath(),
-            $request->getUri()->getHost(),
-            $request->getUri()->getPort(),
-            strtoupper( hash($this->_algorithm, $body ) ),
-            ''
-        ];
-        $data_normalized = implode( "\n", $data );
-        $hmac = base64_encode( hash_hmac( $this->_algorithm, $data_normalized, $this->_aeskey, true ) );
+        $algorithm = $this->_algorithm;
+        $timestamp =  date(\DateTime::ISO8601 );
+        $nonce = hash('sha512', random_int( PHP_INT_MIN, PHP_INT_MAX ) );
+        $method = $request->getMethod();
+        $uri = $request->getUri();
+        $body = $request->getBody()->getContents();
+
+        $hmac = $this->_buildHash( $this->_aeskey, $algorithm, $timestamp, $nonce, $method, $uri, $body );
 
         $authorization_string = 'Hawk id=[' . $this->_login . ']' .
                                 ',ts=[' . $timestamp . ']' .
                                 ',nonce=[' . $nonce . ']' .
                                 ',mac=[' . $hmac . ']' .
-                                ',algorithm=[' . $this->_getAlgorithmForHeader() . ']';
+                                ',algorithm=[' . $this->_getAlgorithmForHeader( $algorithm ) . ']';
 
         return $authorization_string;
     }
 
-    private function _getAlgorithmForHeader()
+    private function _getAlgorithmForHeader( $algorithm )
     {
-        switch ( $this->_algorithm )
+        switch ( $algorithm )
         {
             case 'sha512':
                 return 'hmac-sha-512';
                 break;
         }
+    }
+
+    private function _getAlgorithmFromHeader( $algorithm )
+    {
+        switch ( $algorithm )
+        {
+            case 'hmac-sha-512':
+                return 'sha512';
+                break;
+        }
+    }
+
+    public function checkAuthorizationHeader( $response, $uri )
+    {
+        $header = $response->getHeader( 'Authorization' );
+        if( !empty( $header ) )
+            $authorization = $header[ 0 ];
+        $hawk = [];
+        preg_match_all( '/(\w+)=\[(.+?)\]/i', $authorization, $matches );
+        for( $i = 0; $i < count( $matches[ 0 ] ); $i++ )
+        {
+            $key = $matches[ 1 ][ $i ]; // Key
+            $value = $matches[ 2 ][ $i ]; // Value
+            $hawk[ $key ] = $value;
+        }
+
+        $algorithm = $hawk[ 'algorithm' ];
+        $timestamp = $hawk[ 'ts' ];
+        $nonce = $hawk[ 'nonce' ];
+        $body = $response->getBody()->getContents();
+
+        $hmac = $this->_buildHash( '' /* TODO: AESKEY server */, $this->_getAlgorithmFromHeader( $algorithm ), $timestamp, $nonce, null, $uri, $body );
+
+        return $hmac === $hawk[ 'mac' ];
+
+    }
+
+    private function _buildHash( $aeskey, $algorithm, $timestamp, $nonce, $method, $uri, $body )
+    {
+        $data = [
+            $timestamp,
+            $nonce,
+            $method,
+            $uri->getPath(),
+            $uri->getHost(),
+            ( !empty( $uri->getPort() ) ? $uri->getPort() : ( $uri->getScheme() == 'http' ? '80' : '443' ) ),
+            strtoupper( hash( $this->_algorithm, $body ) ),
+            ''
+        ];
+        if( is_null( $method ) )
+            array_splice($data, 2, 1 );
+
+        $data_normalized = implode( "\n", $data );
+
+        $hmac = base64_encode( hash_hmac( $algorithm, $data_normalized, $aeskey, true ) );
+
+        return $hmac;
     }
 
 }

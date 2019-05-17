@@ -5,4 +5,42 @@ require 'init.inc.php';
 use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
 
 $boardings = new Marketplace\Resources\Boarding( $conn );
+
+echo 'getAll:' . "\n";
 $result = $boardings->getAll();
+echo " -> boarding count " . count( $result ) . "\n";
+
+echo "\n\n";
+
+/*
+echo 'create:' . "\n";
+$boarding = new Marketplace\Objects\Boarding();
+$boarding->setWallet( 321103811974 );
+$result = $boardings->create( $boarding );
+if( $result === true )
+    echo ' -> new ID: ' . $boarding->getBoardingId() . "\n";
+else
+    echo 'error occured';
+
+echo "\n\n";
+*/
+
+echo 'getId: ' . "\n";
+$boarding_id = 1548233;
+$result = $boardings->getId( $boarding_id );
+if( $result === true )
+    echo ' -> ID: ' . $result->getBoardingId() . "\n";
+else
+    echo 'error occured';
+
+echo "\n\n";
+
+echo 'put: ' . "\n";
+$boarding_id = 1548233;
+$result = $boardings->simulate( $boarding_id );
+if( $result === true )
+    echo ' -> new ID: ' . $result->getBoardingId() . "\n";
+else
+    echo 'error occured';
+
+echo "\n\n";
