@@ -4,6 +4,8 @@
 namespace asdfklgash\IngenicoMarketplaceAPI\Objects;
 
 
+use asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet\Balance;
+use asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet\BankAccount;
 use asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet\WalletOwnerType;
 
 class Wallet
@@ -12,26 +14,8 @@ class Wallet
     private $_wallet_id = null;
     private $_wallet_owner_type = null;
     private $_alias = null;
-    private $_currency = null;
-    private $_iban = null;
-    private $_bic = null;
-    private $_bankAccountOwner = null;
-
-    /*
- * create:
-{
-"type": "object",
-"$schema": "http://json-schema.org/draft-03/schema",
-"properties": {
-"alias": {"required": false,"type": "string"},
-"walletOwnerType":{"required": true,"enum":["merchant","person"]},
-"iban": {"required": true,"type": "string"},
-"bic": {"required": true,"type": "string"},
-"bankAccountOwner": {"required": true,"type": "string"}
-},
-"required": true
-}
- */
+    private $_balances = [];
+    private $_bank_accounts = [];
 
     /**
      * @return null
@@ -143,6 +127,54 @@ class Wallet
     public function setCurrency( $currency ): void
     {
         $this->_currency = $currency;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBalances(): array
+    {
+        return $this->_balances;
+    }
+
+    /**
+     * @param array $balances
+     */
+    public function setBalances( array $balances ): void
+    {
+        $this->_balances = $balances;
+    }
+
+    /**
+     * @param array $balances
+     */
+    public function addBalance( Balance $balance ): void
+    {
+        $this->_balances[] = $balance;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBankAccounts(): array
+    {
+        return $this->_bank_accounts;
+    }
+
+    /**
+     * @param array $bank_accounts
+     */
+    public function setBankAccounts( array $bank_accounts ): void
+    {
+        $this->_bank_accounts = $bank_accounts;
+    }
+
+    /**
+     * @param array $bank_accounts
+     */
+    public function addBankAccount( BankAccount $bank_account ): void
+    {
+        $this->_bank_accounts[] = $bank_account;
     }
 
 }

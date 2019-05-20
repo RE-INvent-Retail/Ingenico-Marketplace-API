@@ -6,8 +6,8 @@ use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
 
 $movements = new Marketplace\Resources\Movements( $conn );
 
+echo 'getAll:' . "\n";
 $result = $movements->getAll();
-print_r($result);
+echo " -> movement count " . count( $result ) . "\n";
 
-$result = $movements->get( '1234' );
-print_r($result);
+echo "\n\n";

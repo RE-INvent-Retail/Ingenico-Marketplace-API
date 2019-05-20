@@ -5,7 +5,7 @@ namespace asdfklgash\IngenicoMarketplaceAPI\Tests;
 use asdfklgash\IngenicoMarketplaceAPI\Connection\Environment;
 use PHPUnit\Framework\TestCase;
 
-class EnvironmentTest extends TestCase
+class   EnvironmentTest extends TestCase
 {
 
     public function testConstruct()

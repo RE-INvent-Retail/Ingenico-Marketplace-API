@@ -15,7 +15,7 @@ echo "\n\n";
 /*
 echo 'create:' . "\n";
 $boarding = new Marketplace\Objects\Boarding();
-$boarding->setWallet( 321103811974 );
+$boarding->setWallet( 321103814806 );
 $result = $boardings->create( $boarding );
 if( $result === true )
     echo ' -> new ID: ' . $boarding->getBoardingId() . "\n";
@@ -26,21 +26,16 @@ echo "\n\n";
 */
 
 echo 'getId: ' . "\n";
-$boarding_id = 1548233;
+$boarding_id = 1548323;
 $result = $boardings->getId( $boarding_id );
-if( $result === true )
-    echo ' -> ID: ' . $result->getBoardingId() . "\n";
-else
-    echo 'error occured';
+echo ' -> ID: ' . $result->getBoardingId() . "\n";
+
 
 echo "\n\n";
 
-echo 'put: ' . "\n";
-$boarding_id = 1548233;
-$result = $boardings->simulate( $boarding_id );
-if( $result === true )
-    echo ' -> new ID: ' . $result->getBoardingId() . "\n";
-else
-    echo 'error occured';
+//echo 'put: ' . "\n";
+//$boarding_id = 1548233;
+//$result = $boardings->simulate( $boarding_id );
+//    echo ' -> new ID: ' . $result->getBoardingId() . "\n";
 
 echo "\n\n";

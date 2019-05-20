@@ -48,6 +48,10 @@ class Request
                     $request_method = 'PUT';
                     $request_options = [ 'query' => $this->_data ];
                     break;
+                case 'DELETE':
+                    $request_method = 'DELETE';
+                    $request_options = [ 'query' => $this->_data ];
+                    break;
                 default:
                     throw new \Exception( 'Method ' . $name . ' not implemented in ' . __CLASS__ );    // TODO - new Exception!
             }
