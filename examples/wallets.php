@@ -65,3 +65,17 @@ else
 
 echo "\n\n";
 
+
+echo 'delete:' . "\n";
+$wallet = new Marketplace\Objects\Wallet();
+$wallet->setWalletId( 321103814806 );
+$result = $wallets->delete( $wallet );
+if( $result === true )
+{
+    echo 'deleted';
+}
+else
+    echo 'error occured';
+
+echo "\n\n";
+
