@@ -4,18 +4,21 @@
 namespace asdfklgash\IngenicoMarketplaceAPI\Connection;
 
 
+use asdfklgash\IngenicoMarketplaceAPI\Connection\Authentication\Credentials;
+
 class Authentication
 {
 
-    private $_login = null;
-    private $_aeskey = null;
+    private $_client = null;
+    private $_server = null;
 
     private $_algorithm = 'sha512';
 
-    public function __construct( $login, $aeskey )
+    // TODO: do Server and Client auth...
+    public function __construct( Credentials $client, Credentials $server = null )
     {
-        $this->_login = $login;
-        $this->_aeskey = $aeskey;
+        $this->_client = $client;
+        $this->_server = $server;
     }
 
     public function authenticationHandler()
@@ -43,9 +46,9 @@ class Authentication
         $uri = $request->getUri();
         $body = $request->getBody()->getContents();
 
-        $hmac = $this->_buildHash( $this->_aeskey, $algorithm, $timestamp, $nonce, $method, $uri, $body );
+        $hmac = $this->_buildHash( $this->_client->getKey(), $algorithm, $timestamp, $nonce, $method, $uri, $body );
 
-        $authorization_string = 'Hawk id=[' . $this->_login . ']' .
+        $authorization_string = 'Hawk id=[' . $this->_client->getId() . ']' .
                                 ',ts=[' . $timestamp . ']' .
                                 ',nonce=[' . $nonce . ']' .
                                 ',mac=[' . $hmac . ']' .
@@ -76,6 +79,11 @@ class Authentication
 
     public function checkAuthorizationHeader( $response, $uri )
     {
+
+        // no check if no credentials set
+        if( empty( $this->_server ) )
+            return true;
+
         $header = $response->getHeader( 'Authorization' );
         if( !empty( $header ) )
             $authorization = $header[ 0 ];
@@ -93,9 +101,9 @@ class Authentication
         $nonce = $hawk[ 'nonce' ];
         $body = $response->getBody()->getContents();
 
-        $hmac = $this->_buildHash( '' /* TODO: AESKEY server */, $this->_getAlgorithmFromHeader( $algorithm ), $timestamp, $nonce, null, $uri, $body );
+        $hmac = $this->_buildHash( $this->_server->getKey(), $this->_getAlgorithmFromHeader( $algorithm ), $timestamp, $nonce, null, $uri, $body );
 
-        return $hmac === $hawk[ 'mac' ];
+        return ( $this->_server->getId() === $hawk[ 'id' ] && $hmac === $hawk[ 'mac' ] );
 
     }
 
