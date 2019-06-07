@@ -19,6 +19,8 @@ if( !empty( SERVER_ID ) && !empty( SERVER_KEY ) )
 else
     $auth_server = null;
 
+$auth_server = null;
+
 $env = new Marketplace\Connection\Environment();
 $auth = new Marketplace\Connection\Authentication( $auth_client, $auth_server );
 $conn = new Marketplace\Connection\Connection( $env, $auth );

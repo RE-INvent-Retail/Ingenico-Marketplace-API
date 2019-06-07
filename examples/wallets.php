@@ -33,15 +33,16 @@ else
 echo "\n\n";
 
 echo 'getId:' . "\n";
-$wallet_id = 321103814806;
+$wallet_id = 321102960394;
 $result = $wallets->get( $wallet_id );
 print_r($result);
 
 echo "\n\n";
 
 echo 'getBalances:' . "\n";
+$wallet_id = $wallet_id;
 $wallet = new Marketplace\Objects\Wallet();
-$wallet->setWalletId( 321103814806 );
+$wallet->setWalletId( $wallet_id );
 $result = $wallets->getBalances( $wallet );
 if( $result === true )
 {
@@ -53,8 +54,9 @@ else
 echo "\n\n";
 
 echo 'getBankAccounts:' . "\n";
+$wallet_id = $wallet_id;
 $wallet = new Marketplace\Objects\Wallet();
-$wallet->setWalletId( 321103814806 );
+$wallet->setWalletId( $wallet_id );
 $result = $wallets->getBankAccounts( $wallet );
 if( $result === true )
 {
@@ -67,8 +69,9 @@ echo "\n\n";
 
 
 echo 'delete:' . "\n";
+$wallet_id   = null;
 $wallet = new Marketplace\Objects\Wallet();
-$wallet->setWalletId( 321103814806 );
+$wallet->setWalletId( $wallet_id );
 $result = $wallets->delete( $wallet );
 if( $result === true )
 {
@@ -78,4 +81,3 @@ else
     echo 'error occured';
 
 echo "\n\n";
-

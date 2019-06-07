@@ -4,6 +4,8 @@
 namespace asdfklgash\IngenicoMarketplaceAPI\Connection;
 
 
+use GuzzleHttp\Exception\ClientException;
+
 class Response
 {
 
@@ -11,6 +13,8 @@ class Response
     private $_request = null;
 
     private $_error  = null;
+    private $_error_code = null;
+    private $_error_message = null;
     private $_result = null;
 
     public function __construct( Connection $connection, Request $request )
@@ -22,6 +26,19 @@ class Response
     public function setError( $e )
     {
         $this->_error = $e;
+        // 400 Bad Request?
+        if( $e instanceof ClientException )
+        {
+            switch( $e->getCode() )
+            {
+                case 404:
+                case 400:
+                    $response = json_decode( $e->getResponse()->getBody() );
+                    $this->_error_code = $response->errorCode;
+                    $this->_error_message = $response->message;
+                    break;
+            }
+        }
     }
 
     public function getError()
@@ -31,9 +48,8 @@ class Response
 
     public function setResult( $result )
     {
-        $this->_result = $result;
-
-        $this->_isAuthenticated();
+        if( $this->_isAuthenticated() )
+            $this->_result = $result;
     }
 
     public function getResult()
@@ -49,13 +65,22 @@ class Response
     private function _isAuthenticated() : bool
     {
         $authentication = $this->_connection->getAuthentication();
-        $authentication->checkAuthorizationHeader( $this->_result, $this->_request->getUri() );
-        return false;
+        return $authentication->checkAuthorizationHeader( $this->_result, $this->_request->getUri() );
     }
 
     public function getBody()
     {
         return $this->_result->getBody();
+    }
+
+    public function getErrorCode()
+    {
+        return $this->_error_code;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->_error_message;
     }
 
 }
