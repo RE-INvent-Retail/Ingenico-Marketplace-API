@@ -12,23 +12,37 @@ echo " -> wallet count " . count( $result ) . "\n";
 
 echo "\n\n";
 
-/*
 echo 'create:' . "\n";
+$create_alias = 'mirakl_' . '2015';
+$create_iban = 'DE11520513735120710131';
+$create_bic = 'HELADEF1BOR';
+$create_owner = 'Max Mustermann';
 $wallet = new Marketplace\Objects\Wallet();
-$wallet->setAlias( 'mirakl_' . '2015' );
+$wallet->setAlias( $create_alias );
 $wallet->setWalletOwnerType( new Marketplace\Objects\Wallet\WalletOwnerType\Merchant() );
 $bank_account = new Marketplace\Objects\Wallet\BankAccount();
 $bank_account->setCurrency( new asdfklgash\IngenicoMarketplaceAPI\Objects\Currencies\EUR() );
-$bank_account->setIban('DE11520513735120710131');
-$bank_account->setBic('HELADEF1BOR');
-$bank_account->setBankAccountOwner('Peter Beitzel' );
+$bank_account->setIban($create_iban );
+$bank_account->setBic($create_bic);
+$bank_account->setBankAccountOwner( $create_owner );
 $wallet->addBankAccount( $bank_account );
 $result = $wallets->create( $wallet );
 if( $result === true )
     echo ' -> new ID: ' . $wallet->getWalletId() . "\n";
 else
-    echo 'error occured';
-*/
+    echo 'error occured' . "\n" ;
+
+echo "\n\n";
+
+echo 'find:' . "\n";
+$find_iban = $create_iban;
+echo ' - IBAN = ' . $find_iban . "\n";
+$result = $wallets->find( $find_iban, null );
+echo " -> found " . count( $result ) . " wallets\n";
+$find_alias = $create_alias;
+echo ' - Alias = ' . $find_alias . "\n";
+$result = $wallets->find( null, $find_alias );
+echo " -> found " . count( $result ) . " wallets\n";
 
 echo "\n\n";
 

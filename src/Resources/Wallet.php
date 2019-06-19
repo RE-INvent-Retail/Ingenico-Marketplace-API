@@ -16,10 +16,18 @@ class Wallet extends Resource
 
     protected $_resource = 'wallets';
 
-    public function getAll( /* TODO: enable filters/pagination/... */ ) : Wallets
+    public function getAll( $offset = null, $limit = null, $iban = null, $alias = null ) : Wallets
     {
 
+        $data = [
+            'offset' => $offset,
+            'limit' => $limit,
+            'iban' => $iban,
+            'alias' => $alias
+        ];
+
         $request = $this->createRequest( $this->_resource );
+        $request->setData( $data );
 
         $response = $request->GET();
 
@@ -43,6 +51,11 @@ class Wallet extends Resource
 
         return $wallets;
 
+    }
+
+    public function find( $iban = null, $alias = null ) : Wallets
+    {
+        return $this->getAll( null, null, $iban, $alias );
     }
 
     public function create( \asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet &$wallet ) : bool

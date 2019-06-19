@@ -77,10 +77,12 @@ class Request
             switch( $result->getStatusCode() )
             {
                 case 400:  // Bad Request
-                    $ingenico_error = new BadRequestException( $result->getStatusCode(), $result->getReasonPhrase(), $result->getBody() );
+                    $err = new BadRequestException( $result->getStatusCode(), $result->getReasonPhrase(), $result->getBody() );
                     break;
+                default:
+                    $err = $e;
             }
-            $response->setError( $e );
+            $response->setError( $err );
         }
         catch( \Exception | \Throwable $e )
         {
