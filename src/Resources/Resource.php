@@ -14,6 +14,8 @@ abstract class Resource
 
     protected $_connection = null;
 
+    protected $_exceptions = false;
+
     public function __construct( Connection $connection )
     {
         $this->_connection = $connection;
@@ -26,6 +28,11 @@ abstract class Resource
         elseif( substr( $uri, 0, 1 ) == '/' )
             $uri = $this->_resource . $uri;
         return new Request( $this->_connection, $uri );
+    }
+
+    protected function useExceptions( $active = true )
+    {
+        $this->_exceptions = $active;
     }
 
 }

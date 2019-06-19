@@ -36,6 +36,10 @@ class Wallet extends Resource
                 $wallets[] = $wallet;
             }
         }
+        elseif( $this->_exceptions )
+        {
+            throw $response->getError();
+        }
 
         return $wallets;
 
@@ -68,8 +72,13 @@ class Wallet extends Resource
         else
         {
             $err = $response->getError();
-            echo 'ERROR: ' . $err->getMessage() . "\n";
-            return false;
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+                return false;
+            }
         }
 
     }
@@ -89,6 +98,10 @@ class Wallet extends Resource
             $wallet->setWalletId( $json_wallet->walletId );
             $wallet->setWalletOwnerType( WalletOwnerType::getFromString( $json_wallet->walletOwnerType ));
             $wallet->setAlias( $json_wallet->alias );
+        }
+        elseif( $this->_exceptions )
+        {
+            throw $response->getError();
         }
 
         return $wallet;
@@ -120,8 +133,13 @@ class Wallet extends Resource
         else
         {
             $err = $response->getError();
-            echo 'ERROR: ' . $err->getMessage() . "\n";
-            return false;
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+                return false;
+            }
         }
 
         return $wallet;
@@ -142,8 +160,13 @@ class Wallet extends Resource
         else
         {
             $err = $response->getError();
-            echo 'ERROR: ' . $err->getMessage() . "\n";
-            return false;
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+                return false;
+            }
         }
 
     }
@@ -179,8 +202,13 @@ class Wallet extends Resource
         else
         {
             $err = $response->getError();
-            echo 'ERROR: ' . $err->getMessage() . "\n";
-            return false;
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+                return false;
+            }
         }
 
     }
@@ -217,8 +245,13 @@ class Wallet extends Resource
         else
         {
             $err = $response->getError();
-            echo 'ERROR: ' . $err->getMessage() . "\n";
-            return false;
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+                return false;
+            }
         }
 
     }
