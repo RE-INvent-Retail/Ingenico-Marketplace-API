@@ -17,8 +17,10 @@ class Authentication
     // TODO: do Server and Client auth...
     public function __construct( Credentials $client, Credentials $server = null )
     {
-        $this->_client = $client;
-        $this->_server = $server;
+        if( $client->isValid() )
+            $this->_client = $client;
+        if( $server->isValid() )
+            $this->_server = $server;
     }
 
     public function authenticationHandler()

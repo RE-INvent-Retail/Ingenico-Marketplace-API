@@ -26,4 +26,9 @@ class Credentials
         return $this->_key;
     }
 
+    public function isValid()
+    {
+        return ( !empty( $this->_id ) && !empty( $this->_key ) );
+    }
+
 }

@@ -30,7 +30,7 @@ abstract class Resource
         return new Request( $this->_connection, $uri );
     }
 
-    protected function useExceptions( $active = true )
+    public function useExceptions( $active = true )
     {
         $this->_exceptions = $active;
     }
