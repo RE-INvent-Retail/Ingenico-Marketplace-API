@@ -4,6 +4,8 @@
 namespace asdfklgash\IngenicoMarketplaceAPI\Objects;
 
 
+use asdfklgash\IngenicoMarketplaceAPI\Objects\Movements\MovementsOperation;
+
 class Movement
 {
 
@@ -17,6 +19,12 @@ class Movement
     private $_reference = null;
     private $_communication = null;
     private $_created = null;
+    private $_gateway_reference = null;
+    private $_gateway_merchant_id = null;
+    private $_status = null;
+    private $_date = null;
+    private $_operation_done = null;
+
 
     /*
 {
@@ -31,6 +39,21 @@ class Movement
    "communication": "First bankfunding",
    "created": "2017-01-31 17:12:23"
 },
+    transfer:
+  {
+      "wallet": 321000484645,
+      "counterpartWallet": 321000486463,
+      "transactionId": 7745263,
+      "amount": 2.5,
+      "currency": "EUR",
+      "operation": "debit",
+      "transactionType": "transfer",
+      "reference": "YZVYZVYZYEVYZE",
+      "communication": "Second transfer",
+      "created": "2017-01-31 17:12:25",
+      "gatewayReference":"1616511",
+      "gatewayMerchantId":"mycompany"
+  }
   */
 
 
@@ -112,7 +135,10 @@ class Movement
      */
     public function setCurrency( $currency ): void
     {
-        $this->_currency = $currency;
+        if( !is_object( $currency ) && $currency instanceof Currency )
+            $this->_currency = Currency::getFromString( $currency );
+        else
+            $this->_currency = $currency;
     }
 
     /**
@@ -128,7 +154,10 @@ class Movement
      */
     public function setOperation( $operation ): void
     {
-        $this->_operation = $operation;
+        if( !is_object( $operation ) && $operation instanceof MovementsOperation )
+            $this->_operation = MovementsOperation::getFromString( $operation );
+        else
+            $this->_operation = $operation;
     }
 
     /**
@@ -193,6 +222,86 @@ class Movement
     public function setCreated( $created ): void
     {
         $this->_created = $created;
+    }
+
+    /**
+     * @return null
+     */
+    public function getGatewayReference()
+    {
+        return $this->_gateway_reference;
+    }
+
+    /**
+     * @param null $gateway_reference
+     */
+    public function setGatewayReference( $gateway_reference ): void
+    {
+        $this->_gateway_reference = $gateway_reference;
+    }
+
+    /**
+     * @return null
+     */
+    public function getGatewayMerchantId()
+    {
+        return $this->_gateway_merchant_id;
+    }
+
+    /**
+     * @param null $gateway_merchant_id
+     */
+    public function setGatewayMerchantId( $gateway_merchant_id ): void
+    {
+        $this->_gateway_merchant_id = $gateway_merchant_id;
+    }
+
+    /**
+     * @return null
+     */
+    public function getStatus()
+    {
+        return $this->_status;
+    }
+
+    /**
+     * @param null $status
+     */
+    public function setStatus( $status ): void
+    {
+        $this->_status = $status;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDate()
+    {
+        return $this->_date;
+    }
+
+    /**
+     * @param null $date
+     */
+    public function setDate( $date ): void
+    {
+        $this->_date = $date;
+    }
+
+    /**
+     * @return null
+     */
+    public function getOperationDone()
+    {
+        return $this->_operation_done;
+    }
+
+    /**
+     * @param null $operation_done
+     */
+    public function setOperationDone( $operation_done ): void
+    {
+        $this->_operation_done = $operation_done;
     }
 
 }

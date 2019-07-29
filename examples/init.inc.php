@@ -2,6 +2,8 @@
 
 require '../vendor/autoload.php';
 
+setlocale(LC_TIME, "de_DE");
+
 $dotenv = Dotenv\Dotenv::create(__DIR__);
 $dotenv->load();
 $dotenv->required([ 'CLIENT_ID', 'CLIENT_KEY' ]);

@@ -26,9 +26,11 @@ echo "\n\n";
 */
 
 echo 'getId: ' . "\n";
-$boarding_id = 1548323;
+$boarding_id = 1551231;
 $result = $boardings->getId( $boarding_id );
 echo ' -> ID: ' . $result->getBoardingId() . "\n";
+echo ' -> URL: ' . $result->getUrl() . "\n";
+echo ' -> gültig bis: ' . $result->getValidUntil() . "\n";
 
 
 echo "\n\n";

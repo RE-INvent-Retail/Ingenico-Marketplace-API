@@ -9,6 +9,7 @@ $wallets = new Marketplace\Resources\Wallet( $conn );
 echo 'getAll:' . "\n";
 $result = $wallets->getAll();
 echo " -> wallet count " . count( $result ) . "\n";
+print_r( $result );
 
 echo "\n\n";
 
@@ -47,7 +48,7 @@ echo " -> found " . count( $result ) . " wallets\n";
 echo "\n\n";
 
 echo 'getId:' . "\n";
-$wallet_id = 321102960394;
+$wallet_id = 321103902409;
 $result = $wallets->get( $wallet_id );
 print_r($result);
 
@@ -69,29 +70,33 @@ echo "\n\n";
 
 echo 'getBankAccounts:' . "\n";
 $wallet_id = $wallet_id;
-$wallet = new Marketplace\Objects\Wallet();
-$wallet->setWalletId( $wallet_id );
-$result = $wallets->getBankAccounts( $wallet );
-if( $result === true )
+if( !empty( $wallet_id ) )
 {
-    print_r($wallet->getBalances());
+    $wallet = new Marketplace\Objects\Wallet();
+    $wallet->setWalletId( $wallet_id );
+    $result = $wallets->getBankAccounts( $wallet );
+    if( $result === true )
+        print_r($wallet->getBalances());
+    else
+        echo 'error occured';
 }
-else
-    echo 'error occured';
 
 echo "\n\n";
 
 
 echo 'delete:' . "\n";
 $wallet_id   = null;
-$wallet = new Marketplace\Objects\Wallet();
-$wallet->setWalletId( $wallet_id );
-$result = $wallets->delete( $wallet );
-if( $result === true )
+if( !empty( $wallet_id ) )
 {
-    echo 'deleted';
+    $wallet = new Marketplace\Objects\Wallet();
+    $wallet->setWalletId( $wallet_id );
+    $result = $wallets->delete( $wallet );
+    if( $result === true )
+    {
+        echo 'deleted';
+    }
+    else
+        echo 'error occured';
 }
-else
-    echo 'error occured';
 
 echo "\n\n";
