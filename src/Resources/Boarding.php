@@ -14,10 +14,17 @@ class Boarding extends Resource
 
     protected $_resource = 'boardings';
 
-    public function getAll( /* TODO: enable filters/pagination/... */ )
+    public function getAll( $offset = null, $limit = null, $wallet = null ) : Boardings
     {
 
+        $data = [
+            'offset' => $offset,
+            'limit' => $limit,
+            'wallet' => $wallet
+        ];
+
         $request = $this->createRequest( $this->_resource );
+        $request->setData( $data );
 
         $response = $request->GET();
 
@@ -40,6 +47,11 @@ class Boarding extends Resource
 
         return $boardings;
 
+    }
+
+    public function find( $wallet = null ) : Boardings
+    {
+        return $this->getAll( null, null, $wallet );
     }
 
     public function create( \asdfklgash\IngenicoMarketplaceAPI\Objects\Boarding &$boarding )
