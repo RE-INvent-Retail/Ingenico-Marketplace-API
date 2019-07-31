@@ -66,8 +66,13 @@ class Boarding extends Resource
         else
         {
             $err = $response->getError();
-            echo 'ERROR: ' . $err->getMessage() . "\n";
-            return false;
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+                return false;
+            }
         }
 
 
