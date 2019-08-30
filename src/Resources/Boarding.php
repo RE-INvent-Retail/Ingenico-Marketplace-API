@@ -23,7 +23,7 @@ class Boarding extends Resource
             'wallet' => $wallet
         ];
 
-        $request = $this->createRequest( $this->_resource );
+        $request = $this->createRequest();
         $request->setData( $data );
 
         $response = $request->GET();

@@ -26,7 +26,7 @@ class Wallet extends Resource
             'alias' => $alias
         ];
 
-        $request = $this->createRequest( $this->_resource );
+        $request = $this->createRequest();
         $request->setData( $data );
 
         $response = $request->GET();

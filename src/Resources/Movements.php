@@ -14,10 +14,24 @@ class Movements extends Resource
 
     protected $_resource = 'movements';
 
-    public function getAll(  /* TODO: enable filters/pagination/... */  )
+    public function getAll( $offset = null, $limit = null, $fromDate = null, $toDate = null, $reference = null, $operation = null, $wallet = null )
     {
 
+        if( empty( $fromDate ) || empty( $toDate ) )
+            throw new ParamMissingException('fromDate and toDate are required');
+
+        $data = [
+            'offset' => $offset,
+            'limit' => $limit,
+            'fromDate' => $fromDate->format('YmdHmi'),
+            'toDate' => $toDate->format('YmdHmi'),
+            'reference' => $reference,
+            'operation' => $operation,
+            'wallet' => $wallet
+        ];
+
         $request = $this->createRequest();
+        $request->setData( $data );
 
         $response = $request->GET();
 

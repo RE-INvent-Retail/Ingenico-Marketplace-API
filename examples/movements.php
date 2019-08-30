@@ -7,11 +7,11 @@ use \asdfklgash\IngenicoMarketplaceAPI as Marketplace;
 $movements = new Marketplace\Resources\Movements( $conn );
 
 echo 'getAll:' . "\n";
-$result = $movements->getAll();
+$result = $movements->getAll( null, 100, date_create('-1 week'), date_create('+1 day'), null, null, '321102960600' );
 echo " -> movement count " . count( $result ) . "\n";
 
 print_r($result);
-
+exit;
 echo "\n\n";
 
 echo str_repeat( '-', 80 ) . "\n";
@@ -83,7 +83,7 @@ echo "\n\n";
 echo str_repeat( '-', 80 ) . "\n";
 
 echo 'getTransfer:' . "\n";
-$transaction_id = null;
+$transaction_id = 43635167;
 if( !empty( $transaction_id ) )
 {
     $result = $movements->getTransferId( $transaction_id );

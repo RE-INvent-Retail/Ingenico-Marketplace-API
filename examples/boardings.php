@@ -12,6 +12,15 @@ echo " -> boarding count " . count( $result ) . "\n";
 
 echo "\n\n";
 
+echo 'find:' . "\n";
+$wallet_id = 321103814806;
+$result = $boardings->find( $wallet_id );
+echo " -> boarding count " . count( $result ) . "\n";
+
+print_r($result);
+
+echo "\n\n";
+
 /*
 echo 'create:' . "\n";
 $boarding = new Marketplace\Objects\Boarding();
