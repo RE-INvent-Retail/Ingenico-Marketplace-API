@@ -7,7 +7,6 @@ namespace asdfklgash\IngenicoMarketplaceAPI\Resources;
 use asdfklgash\IngenicoMarketplaceAPI\Objects\Currency;
 use asdfklgash\IngenicoMarketplaceAPI\Objects\Movement;
 use asdfklgash\IngenicoMarketplaceAPI\Resources\Exceptions\ParamMissingException;
-use GuzzleHttp\Exception\ServerException;
 
 class Movements extends Resource
 {
@@ -489,7 +488,6 @@ class Movements extends Resource
             'gatewayReference' => $movement->getGatewayReference(),
             'gatewayMerchantId' => $movement->getGatewayMerchantId(),
             'wallet' => $movement->getWalletId(),
-            'counterPartWallet' => $movement->getCounterpartWalletId(),
             'amount' => $movement->getAmount(),
             'currency' => (string)$movement->getCurrency(),
             'communication' => $movement->getCommunication(),
