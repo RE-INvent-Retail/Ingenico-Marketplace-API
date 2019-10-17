@@ -311,14 +311,16 @@ class Movement
             'counterpartWallet' => $this->getCounterpartWalletId(),
             'transactionId' => $this->getTransactionId(),
             'amount' => $this->getAmount(),
-            'currency' => $this->getCurrency(),
+            'currency' => (string)$this->getCurrency(),
             'operation' => $this->getOperation(),
             'transactionType' => $this->getTransactionType(),
             'reference' => $this->getReference(),
             'communication' => $this->getCommunication(),
             'created' => $this->getCreated(),
+            /*
             'gatewayReference' => $this->getGatewayReference(),
             'gatewayMerchantId' => $this->getGatewayMerchantId()
+            */
         ];
     }
 
