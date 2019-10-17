@@ -23,8 +23,8 @@ class Movements extends Resource
         $data = [
             'offset' => $offset,
             'limit' => $limit,
-            'fromDate' => $fromDate->format('YmdHmi'),
-            'toDate' => $toDate->format('YmdHmi'),
+            'fromDate' => $fromDate->format('YmdHis'),
+            'toDate' => $toDate->format('YmdHis'),
             'reference' => $reference,
             'operation' => $operation,
             'wallet' => $wallet
@@ -105,8 +105,8 @@ class Movements extends Resource
         $data = [
             'offset' => $offset,
             'limit' => $limit,
-            'fromDate' => $fromDate->format('YmdHmi'),
-            'toDate' => $toDate->format('YmdHmi')
+            'fromDate' => $fromDate->format('YmdHis'),
+            'toDate' => $toDate->format('YmdHis')
         ];
 
         $request = $this->createRequest( '/' . 'gatewayfunding' );
@@ -200,8 +200,8 @@ class Movements extends Resource
         $data = [
             'offset' => $offset,
             'limit' => $limit,
-            'fromDate' => $fromDate->format('YmdHmi'),
-            'toDate' => $toDate->format('YmdHmi'),
+            'fromDate' => $fromDate->format('YmdHis'),
+            'toDate' => $toDate->format('YmdHis'),
             'wallet' => $wallet
         ];
 
@@ -296,8 +296,8 @@ class Movements extends Resource
         $data = [
             'offset' => $offset,
             'limit' => $limit,
-            'fromDate' => $fromDate->format('YmdHmi'),
-            'toDate' => $toDate->format('YmdHmi'),
+            'fromDate' => $fromDate->format('YmdHis'),
+            'toDate' => $toDate->format('YmdHis'),
             'gatewayReference' => $gatewayReference,
             'operation' => $operation,
             'wallet' => $wallet
@@ -489,6 +489,7 @@ class Movements extends Resource
             'gatewayReference' => $movement->getGatewayReference(),
             'gatewayMerchantId' => $movement->getGatewayMerchantId(),
             'wallet' => $movement->getWalletId(),
+            'counterPartWallet' => $movement->getCounterpartWalletId(),
             'amount' => $movement->getAmount(),
             'currency' => (string)$movement->getCurrency(),
             'communication' => $movement->getCommunication(),
