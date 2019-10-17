@@ -304,4 +304,22 @@ class Movement
         $this->_operation_done = $operation_done;
     }
 
+    public function asArray() : array
+    {
+        return [
+            'wallet' => $this->getWalletId(),
+            'counterpartWallet' => $this->getCounterpartWalletId(),
+            'transactionId' => $this->getTransactionId(),
+            'amount' => $this->getAmount(),
+            'currency' => $this->getCurrency(),
+            'operation' => $this->getOperation(),
+            'transactionType' => $this->getTransactionType(),
+            'reference' => $this->getReference(),
+            'communication' => $this->getCommunication(),
+            'created' => $this->getCreated(),
+            'gatewayReference' => $this->getGatewayReference(),
+            'gatewayMerchantId' => $this->getGatewayMerchantId()
+        ];
+    }
+
 }

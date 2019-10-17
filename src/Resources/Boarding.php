@@ -7,7 +7,6 @@ namespace asdfklgash\IngenicoMarketplaceAPI\Resources;
 use asdfklgash\IngenicoMarketplaceAPI\Connection\Environment;
 use asdfklgash\IngenicoMarketplaceAPI\Objects\Boardings;
 use GuzzleHttp\Exception\ServerException;
-use mysql_xdevapi\Exception;
 
 class Boarding extends Resource
 {
@@ -117,7 +116,7 @@ class Boarding extends Resource
     {
 
         if( !$this->_connection->getEnvironment()->isSandbox() )
-            throw new Exception( 'Simulation is only available in Sandbox' );   // TODO specific Exception
+            throw new \Exception( 'Simulation is only available in Sandbox' );   // TODO specific Exception
 
         $request = $this->createRequest( '/' . $id );
 
