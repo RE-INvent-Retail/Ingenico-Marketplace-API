@@ -479,5 +479,49 @@ class Movements extends Resource
 
     }
 
+    public function refund( Movement &$movement )
+    {
+
+        if( empty( $movement ) )
+            throw new ParamMissingException('movement is required');
+
+        $data = [
+            'gatewayReference' => $movement->getGatewayReference(),
+            'gatewayMerchantId' => $movement->getGatewayMerchantId(),
+            'wallet' => $movement->getWalletId(),
+            'amount' => $movement->getAmount(),
+            'currency' => (string)$movement->getCurrency(),
+            'communication' => $movement->getCommunication(),
+            'reference' => $movement->getReference()
+        ];
+
+        $request = $this->createRequest( '/' . 'refund' );
+        $request->setData( $data );
+
+        $response = $request->POST();
+
+        if( $response->isSuccess() )
+        {
+            $json_transfer = json_decode( $response->getBody() );
+            $movement->setTransactionId( $json_transfer->transactionId );
+            $movement->setStatus( $json_transfer->status );
+            $movement->setDate( $json_transfer->date );
+            $movement->setOperationDone( $json_transfer->operationDone );
+            return true;
+        }
+        else
+        {
+            $err = $response->getError();
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+            }
+            return false;
+        }
+
+    }
+
 
 }
