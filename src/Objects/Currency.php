@@ -24,7 +24,7 @@ class Currency
                 return new EUR();
                 break;
             default:
-                throw new \Exception( 'Currency ' . $currency . ' not implemented yet' ); // TODO - own exception!
+                throw new \Exception( 'Currency [' . $currency . '] not implemented yet' ); // TODO - own exception!
         }
     }
 

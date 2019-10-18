@@ -74,6 +74,19 @@ class Wallet
     }
 
     /**
+     * @return Balance
+     */
+    public function getBalanceForCurrency( Currency $currency ): Balance
+    {
+        foreach( $this->_balances as $balance )
+        {
+            if( $balance->getCurrency() == $currency )
+                return $balance;
+        }
+        return new Balance();
+    }
+
+    /**
      * @param array $balances
      */
     public function setBalances( array $balances ): void
