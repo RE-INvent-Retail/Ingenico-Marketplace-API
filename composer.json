@@ -1,5 +1,5 @@
 {
-  "name": "asdfklgash/Ingenico-Marketplace-API",
+  "name": "asdfklgash/ingenico-marketplace-api",
   "description": "PHP-Library for the Ingenico Marketplace API",
   "minimum-stability": "dev",
   "license": "proprietary",
@@ -10,8 +10,8 @@
     }
   ],
   "require": {
-    "php": ">=7.1.0",
-    "guzzlehttp/guzzle": "6.3.3"
+    "php": ">=7.2.0",
+    "guzzlehttp/guzzle": "^7.0.1"
   },
   "require-dev": {
     "phpunit/phpunit": "*",
