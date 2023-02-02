@@ -84,14 +84,14 @@ class Request
             }
             $response->setError( $err );
         }
-        catch( \Exception | \Throwable $e )
+        catch( \Throwable $e )
         {
             $result = $e->getResponse();
             $response->setError( $e );
         }
         finally
         {
-            $response->setResult( $result );
+            $response->setResult( $result ?? null );
         }
 
         return $response;

@@ -46,7 +46,7 @@ class Response
         return $this->_error;
     }
 
-    public function setResult( $result )
+    public function setResult( $result = null )
     {
         if( $this->_isAuthenticated() )
             $this->_result = $result;
@@ -59,7 +59,8 @@ class Response
 
     public function isSuccess() : bool
     {
-        return ( empty( $this->_error ) && ( $this->_result->getStatusCode() >= 200 && $this->_result->getStatusCode() < 300 ) );
+        return ( empty( $this->_error ) &&
+                 ( !is_null( $this->_result ) && ( $this->_result->getStatusCode() >= 200 && $this->_result->getStatusCode() < 300 ) ) );
     }
 
     private function _isAuthenticated() : bool
