@@ -8,7 +8,6 @@ use asdfklgash\IngenicoMarketplaceAPI\Connection\Exceptions\BadRequestException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\TransferStats;
-use mysql_xdevapi\Exception;
 
 class Request
 {
@@ -86,7 +85,10 @@ class Request
         }
         catch( \Throwable $e )
         {
-            $result = $e->getResponse();
+            if( method_exists( $e, 'getResponse' ) )
+            {
+                $result = $e->getResponse();
+            }
             $response->setError( $e );
         }
         finally
