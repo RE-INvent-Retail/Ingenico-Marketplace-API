@@ -5,6 +5,12 @@ Documentation: https://sandbox-marketplace.api-ingenico.com/MarketplaceAPIServic
 
 ## Changelog
 
+### 1.0.2
+
+Release 2023-07-19
+
+Bugfix for error handling in Request
+
 ### 1.0.1
 
 Release 2023-02-02
