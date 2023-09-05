@@ -522,6 +522,105 @@ class Movements extends Resource
 
     }
 
+    public function getPayoutAll( $offset = null, $limit = null, $fromDate = null, $toDate = null, $wallet = null )
+    {
+
+        if( empty( $fromDate ) || empty( $toDate ) )
+            throw new ParamMissingException('fromDate and toDate are required');
+
+        $data = [
+            'offset' => $offset,
+            'limit' => $limit,
+            'fromDate' => $fromDate->format('YmdHis'),
+            'toDate' => $toDate->format('YmdHis'),
+            'wallet' => $wallet
+        ];
+
+        $request = $this->createRequest( '/' . 'payout' );
+        $request->setData( $data );
+
+        $response = $request->GET();
+
+        $movements = new \asdfklgash\IngenicoMarketplaceAPI\Objects\Movements();
+        if( $response->isSuccess() )
+        {
+            $json_movements = json_decode( $response->getBody() );
+            foreach ( $json_movements as $json_movement )
+            {
+                $movement = new Movement();
+                $movement->setWalletId( $json_movement->wallet );
+                $movement->setCounterpartWalletId( $json_movement->counterpartWallet );
+                $movement->setTransactionId( $json_movement->transactionId );
+                $movement->setAmount( $json_movement->amount );
+                $movement->setCurrency( Currency::getFromString( $json_movement->currency ) );
+                $movement->setOperation( $json_movement->operation );
+                $movement->setTransactionType( $json_movement->transactionType );
+                $movement->setReference( $json_movement->reference );
+                $movement->setCommunication( $json_movement->communication );
+                $movement->setCreated( $json_movement->created );
+                $movements[] = $movement;
+            }
+        }
+        else
+        {
+            $err = $response->getError();
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+            }
+        }
+
+        return $movements;
+
+    }
+
+    public function getPayoutId( $id )
+    {
+
+        if( empty( $id ) )
+            throw new ParamMissingException('id is required');
+
+        $request = $this->createRequest( '/' . 'payout' . '/' . $id );
+
+        $response = $request->GET();
+
+        $movements = new \asdfklgash\IngenicoMarketplaceAPI\Objects\Movements();
+        if( $response->isSuccess() )
+        {
+            $json_movements = json_decode( $response->getBody() );
+            foreach ( $json_movements as $json_movement )
+            {
+                $movement = new Movement();
+                $movement->setWalletId( $json_movement->wallet );
+                $movement->setCounterpartWalletId( $json_movement->counterpartWallet );
+                $movement->setTransactionId( $json_movement->transactionId );
+                $movement->setAmount( $json_movement->amount );
+                $movement->setCurrency( Currency::getFromString( $json_movement->currency ) );
+                $movement->setOperation( $json_movement->operation );
+                $movement->setTransactionType( $json_movement->transactionType );
+                $movement->setReference( $json_movement->reference );
+                $movement->setCommunication( $json_movement->communication );
+                $movement->setCreated( $json_movement->created );
+                $movements[] = $movement;
+            }
+        }
+        else
+        {
+            $err = $response->getError();
+            if( $this->_exceptions )
+                throw $err;
+            else
+            {
+                echo 'ERROR: ' . $err->getMessage() . "\n";
+            }
+        }
+
+        return $movements;
+
+    }
+
     public function payout( Movement &$movement )
     {
 
