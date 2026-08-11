@@ -15,7 +15,7 @@ class Authentication
     private $_algorithm = 'sha512';
 
     // TODO: do Server and Client auth...
-    public function __construct( Credentials $client, Credentials $server = null )
+    public function __construct( Credentials $client, ?Credentials $server = null )
     {
         if( !is_null( $client ) && $client->isValid() )
             $this->_client = $client;

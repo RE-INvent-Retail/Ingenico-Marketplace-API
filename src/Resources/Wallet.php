@@ -185,7 +185,7 @@ class Wallet extends Resource
     }
 
 
-    public function getBalances( \asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet &$wallet, string $currency = null )
+    public function getBalances( \asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet &$wallet, ?string $currency = null )
     {
 
         if( !empty( $currency ) )
@@ -226,7 +226,7 @@ class Wallet extends Resource
 
     }
 
-    public function getBankAccounts( \asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet &$wallet, string $currency = null )
+    public function getBankAccounts( \asdfklgash\IngenicoMarketplaceAPI\Objects\Wallet &$wallet, ?string $currency = null )
     {
 
         if( !empty( $currency ) )
