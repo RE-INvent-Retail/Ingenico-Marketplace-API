@@ -5,6 +5,13 @@ Documentation: https://sandbox-marketplace.api-ingenico.com/MarketplaceAPIServic
 
 ## Changelog
 
+### 1.1.1
+
+Release 2026-08-11
+
+- Marked implicitly nullable parameters as nullable for PHP 8.4
+- No behaviour change, minimum PHP version stays at 7.2
+
 ### 1.1.0
 
 Release 2023-09-05
